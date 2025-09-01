@@ -1,18 +1,8 @@
+//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
+// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 fun main() {
-    println("Hello, Kotlin! Your IDE is working!")
 
-    // Simple calculation to test basic functionality
-    val a = 5
-    val b = 10
-    val sum = a + b
-
-    println("Sum of $a and $b is: $sum")
-
-    // Test a simple function
-    val result = greet("User")
-    println(result)
-}
-
-fun greet(name: String): String {
-    return "Welcome, $name! This is a test function."
+    //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
+    // to see how IntelliJ IDEA suggests fixing it.
+    println("Hello World")
 }
