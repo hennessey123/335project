@@ -1,11 +1,18 @@
 fun main() {
-    val name = "Dean"
+    println("Hello, Kotlin! Your IDE is working!")
 
-    println("hello, " + name + "!")
+    // Simple calculation to test basic functionality
+    val a = 5
+    val b = 10
+    val sum = a + b
 
-    for (i in 1..3){
+    println("Sum of $a and $b is: $sum")
 
-        println("i + $i")
-    }
+    // Test a simple function
+    val result = greet("User")
+    println(result)
+}
 
+fun greet(name: String): String {
+    return "Welcome, $name! This is a test function."
 }
