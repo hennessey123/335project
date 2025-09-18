@@ -1,12 +1,12 @@
 // No need to import java.lang.Thread explicitly
-class MyRunnable {
-    var sum: Int = 0
+class MyRunnable1 {
+    
 
     companion object {
         var num_threads: Int = 5
         var num_iteration: Int = 100
 
-        @JvmStatic
+        
         fun main(args: Array<String>) {
             val chunk: Int = num_iteration / num_threads
             val workers = arrayOfNulls<Workers>(num_threads)
