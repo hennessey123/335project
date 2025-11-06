@@ -1,0 +1,126 @@
+package com.example;
+
+import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
+
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.text.html.ImageView;
+
+import org.opencv.core.CvType;
+import org.opencv.core.Mat;
+import org.opencv.core.MatOfByte;
+import org.opencv.core.Scalar;
+import org.opencv.imgcodecs.Imgcodecs;
+import org.opencv.videoio.VideoCapture;
+import nu.pattern.OpenCV;
+
+public class Main extends JFrame {
+    public static void main(String[] args) {
+        System.out.println("Hello world!");
+        // For Java >= 12 the loader falls back to loadLocally(); call it explicitly to
+        // avoid the "falling back" message
+        OpenCV.loadLocally();
+        final Main camera = new Main();
+        camera.startCamera();
+
+    }
+
+    // Camera screen
+    private JLabel cameraScreen;
+
+    // Button for image capture
+    private JButton btnCapture;
+
+    // Start camera
+    private VideoCapture capture;
+
+    // Store image as 2D matrix
+    private Mat image;
+
+    private boolean clicked = false;
+
+    public Main() {
+
+        // Designing UI
+        setLayout(null);
+
+        cameraScreen = new JLabel();
+        cameraScreen.setBounds(0, 0, 640, 480);
+        add(cameraScreen);
+
+        btnCapture = new JButton("capture");
+        btnCapture.setBounds(300, 480, 80, 40);
+        add(btnCapture);
+
+        btnCapture.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                clicked = true;
+            }
+        });
+
+        setSize(640, 560);
+        setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setVisible(true);
+    }
+
+    // Creating a camera
+    public void startCamera() {
+        capture = new VideoCapture(0);
+        image = new Mat();
+        byte[] imageData;
+
+        ImageIcon icon;
+        while (true) {
+            // read image to matrix
+            capture.read(image);
+            if (!capture.isOpened()) {
+                System.out.println("Error: Camera not opened.");
+                return; // Exit if camera can't be opened
+            }
+
+            // convert matrix to byte
+            final MatOfByte buf = new MatOfByte();
+            Imgcodecs.imencode(".jpg", image, buf);
+
+            imageData = buf.toArray();
+
+            // Add to JLabel
+            icon = new ImageIcon(imageData);
+            cameraScreen.setIcon(icon);
+
+            // Capture and save to file
+            if (clicked) {
+                // prompt for enter image name
+                String name = JOptionPane.showInputDialog(
+                        this, "Enter image name");
+                if (name == null) {
+                    name = new SimpleDateFormat(
+                            "yyyy-mm-dd-hh-mm-ss")
+                            .format(new Date(
+                                    HEIGHT, WIDTH, getX()));
+                }
+
+                // Write to file
+                Imgcodecs.imwrite(name + ".jpg", image);
+                
+                clicked = false;
+            }
+        }
+    }
+
+}
