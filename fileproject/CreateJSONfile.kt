@@ -6,7 +6,7 @@ import java.io.IOException
 import kotlinx.serialization.json.*
 
 
-class CreateJSONFile {
+class CreateJSONfile {
     @Throws(IOException::class)
     fun createandwriteJSON(file: File, records: Array<Record?>) {
         val obj: Array<JsonObject?> = arrayOfNulls<JsonObject?>(150)
