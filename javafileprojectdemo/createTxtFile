@@ -1,0 +1,52 @@
+package filesstuff;
+
+import java.io.*;
+import java.util.ArrayList;
+
+public class createTxtFile {
+
+    static Record[] records = new Record[150];
+
+    public static void main(String[] args) throws IOException {
+        for (int y = 0; y < records.length; y++) {
+            records[y] = new Record();
+        }
+        BufferedReader bfri = new BufferedReader( // allows user to configure filename
+                new InputStreamReader(System.in));
+
+        System.out.print("Enter the Path : ");
+
+        // Reading File name
+        String path = bfri.readLine();
+        File name = new File(path);
+        File srcFile = new File("/Users/isaachennessey/Downloads/fake_data_records.txt");
+        File srcFile2 = new File("/Users/isaachennessey/Downloads/fake_data_records_50.txt");
+        CreateWriteFile ed = new CreateWriteFile();
+        ed.createandwrite(name, srcFile, records);
+        appendTxtFile edd = new appendTxtFile();
+        edd.appendandwrite(name, srcFile2, records);
+        readTxtFile eddd = new readTxtFile();
+        eddd.readandprint(name, records);
+    }
+}
+
+class Record {
+    String firstname;
+    String lastname;
+    String dob;
+    String phone;
+    String street;
+    String city;
+    String state;
+    String zip;
+
+    @Override
+    public String toString() {
+        System.out.println(firstname + " " + lastname + " " + dob + " " + phone + " " + street + " " + city + " "
+                + state + " " + zip);
+        return super.toString();
+    }
+
+    // Getters and setters (omitted for brevity)
+
+}
